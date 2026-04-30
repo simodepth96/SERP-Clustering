@@ -45,13 +45,25 @@ Each cell builds on the previous one. Run them top to bottom.
 |---|---|
 | **Imports & config** | Installs packages, sets all configuration variables |
 | **Keyword upload** | Loads and deduplicates your keyword list from a `.txt` file |
-| **SERP scraper** | Calls DataForSEO for each keyword, captures organic URLs, SERP feature types, rank positions, and pixel positions (`rectangle_y`). Also extracts the first reference URL from AI Overview items. |
+| **SERP scraper** | Calls DataForSEO for each keyword, captures organic URLs, SERP feature types, rank positions, and pixel positions (`rectangle_y`*). Also extracts the first reference URL from AI Overview items. |
 | **Clustering** | Builds a URL-overlap graph between keywords, runs TF-IDF to name each cluster after its most representative keyword, and flags unconnected keywords as Noise |
 | **SERP element analysis** | Charts the distribution of SERP feature types (organic, AI overview, people also ask, etc.) and shows what percentage of elements appear above the fold |
 | **Domain heatmaps** | Shows which domains rank most frequently across your keywords, and which domains compete for the same keywords |
 | **Export** | Saves three CSVs and auto-downloads them in Colab |
 
----
+`rectangle_y` is the pixel distance from the top of the Google search results page to where that SERP element starts.
+A threshold of 400px is used as a proxy for the bottom of the screen on a mobile device.
+
+- **Above fold** (`rectangle_y < 400`) — the element appears in the first screenful without scrolling. A high above-fold count suggests queries are triggering AI Overviews or other SERP features that dominate the top of the page, leading to **higher impressions** for those features but **reduced visibility** for organic results.
+- **Below fold** (`rectangle_y ≥ 400`) — the user must scroll to see it. A high below-fold count suggests organic results are being pushed down by AI Overviews or other snippets, resulting in **fewer impressions and lower CTR** for organic listings.
+
+### What does it mean for your keywords?
+
+| Signal | Implication |
+|---|---|
+| High above-fold count | Queries likely trigger AI Overview or rich SERP features — organic visibility is compressed |
+| High below-fold count | Organic results are displaced — expect lower impressions and CTR despite strong rankings |
+
 
 ## Output Files
 
