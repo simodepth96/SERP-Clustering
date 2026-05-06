@@ -85,9 +85,12 @@ A threshold of 400px is used as a proxy for the bottom of the screen on a mobile
 
 ## How Clustering Works
 
-For each pair of keywords, the script computes an **overlap coefficient** — the number of shared organic URLs divided by the size of the smaller URL set. If two keywords share at least `MIN_COMMON_URLS` URLs with an overlap coefficient above `MIN_OVERLAP`, they are connected by an edge in a graph. Connected components of that graph become clusters.
+TF-IDF similarity for SERP clustering measures how closely search results relate by comparing the weighted importance of terms across pages, grouping queries with similar ranking content.  
+It does **not rely on semantic similarity**, but rather on **string-based matching of SERP URLs**.
 
-Each cluster is named using **TF-IDF cosine similarity** across the keyword texts — the keyword most similar to all others in the cluster is chosen as the cluster name.
+For each pair of keywords, the script computes an **overlap coefficient** — the number of shared organic URLs divided by the size of the smaller URL set. If two keywords share at least `MIN_COMMON_URLS` URLs and have an overlap coefficient above `MIN_OVERLAP`, they are connected by an edge in a graph. Connected components in this graph form the clusters.
+
+Each cluster is then labelled using **TF-IDF cosine similarity** across the keyword set: the keyword most similar to all others in the cluster is selected as the cluster name.
 
 Keywords with no connections to any other keyword are labelled **Noise / Unclustered**.
 
